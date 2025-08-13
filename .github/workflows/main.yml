@@ -15,14 +15,16 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      # 安装 Python 2.7（DeadSnakes PPA）
-      - name: Install Python 2.7
+      # 安装 Python 2.7（通过旧版 .deb 包）
+      - name: Install Python 2.7 from old Ubuntu repo
         run: |
           sudo apt update
-          sudo apt install -y software-properties-common
-          sudo add-apt-repository ppa:deadsnakes/ppa -y
-          sudo apt update
-          sudo apt install -y python2.7
+          sudo apt install -y wget
+          wget http://security.ubuntu.com/ubuntu/pool/universe/p/python2.7/libpython2.7-minimal_2.7.18-13ubuntu1.2_amd64.deb
+          wget http://security.ubuntu.com/ubuntu/pool/universe/p/python2.7/python2.7-minimal_2.7.18-13ubuntu1.2_amd64.deb
+          wget http://security.ubuntu.com/ubuntu/pool/universe/p/python2.7/libpython2.7-stdlib_2.7.18-13ubuntu1.2_amd64.deb
+          wget http://security.ubuntu.com/ubuntu/pool/universe/p/python2.7/python2.7_2.7.18-13ubuntu1.2_amd64.deb
+          sudo apt install ./libpython2.7-minimal_*.deb ./python2.7-minimal_*.deb ./libpython2.7-stdlib_*.deb ./python2.7_*.deb
           sudo ln -sf /usr/bin/python2.7 /usr/bin/python
 
       - name: Build
@@ -42,14 +44,16 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      # 安装 Python 2.7（DeadSnakes PPA）
-      - name: Install Python 2.7
+      # 安装 Python 2.7（通过旧版 .deb 包）
+      - name: Install Python 2.7 from old Ubuntu repo
         run: |
           sudo apt update
-          sudo apt install -y software-properties-common
-          sudo add-apt-repository ppa:deadsnakes/ppa -y
-          sudo apt update
-          sudo apt install -y python2.7
+          sudo apt install -y wget
+          wget http://security.ubuntu.com/ubuntu/pool/universe/p/python2.7/libpython2.7-minimal_2.7.18-13ubuntu1.2_amd64.deb
+          wget http://security.ubuntu.com/ubuntu/pool/universe/p/python2.7/python2.7-minimal_2.7.18-13ubuntu1.2_amd64.deb
+          wget http://security.ubuntu.com/ubuntu/pool/universe/p/python2.7/libpython2.7-stdlib_2.7.18-13ubuntu1.2_amd64.deb
+          wget http://security.ubuntu.com/ubuntu/pool/universe/p/python2.7/python2.7_2.7.18-13ubuntu1.2_amd64.deb
+          sudo apt install ./libpython2.7-minimal_*.deb ./python2.7-minimal_*.deb ./libpython2.7-stdlib_*.deb ./python2.7_*.deb
           sudo ln -sf /usr/bin/python2.7 /usr/bin/python
 
       - name: Make OTA images
