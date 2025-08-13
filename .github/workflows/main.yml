@@ -15,11 +15,16 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      # 安装 Python 2.7（官方缓存版本）
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '2.7'
+
       - name: Build
         run: |
           sudo apt update
-          sudo apt install android-tools-mkbootimg bc build-essential ca-certificates cpio curl git kmod libssl-dev libtinfo5 python2 sudo unzip wget xz-utils -y --no-install-recommends
-          sudo ln -sf python2.7 /usr/bin/python
+          sudo apt install android-tools-mkbootimg bc build-essential ca-certificates cpio curl git kmod libssl-dev libtinfo5 sudo unzip wget xz-utils -y --no-install-recommends
+          sudo ln -sf $(which python2.7) /usr/bin/python
           ./build.sh
 
       - name: Upload basic tarball with boot and recovery images
@@ -32,6 +37,11 @@ jobs:
     needs: build
     steps:
       - uses: actions/checkout@v2
+
+      # 安装 Python 2.7（保证脚本可用）
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '2.7'
 
       - name: Make OTA images
         run: |
