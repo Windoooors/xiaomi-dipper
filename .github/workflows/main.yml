@@ -15,16 +15,20 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      # 安装 Python 2.7（官方缓存版本）
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '2.7'
+      # 安装 Python 2.7（DeadSnakes PPA）
+      - name: Install Python 2.7
+        run: |
+          sudo apt update
+          sudo apt install -y software-properties-common
+          sudo add-apt-repository ppa:deadsnakes/ppa -y
+          sudo apt update
+          sudo apt install -y python2.7
+          sudo ln -sf /usr/bin/python2.7 /usr/bin/python
 
       - name: Build
         run: |
           sudo apt update
           sudo apt install android-tools-mkbootimg bc build-essential ca-certificates cpio curl git kmod libssl-dev libtinfo5 sudo unzip wget xz-utils -y --no-install-recommends
-          sudo ln -sf $(which python2.7) /usr/bin/python
           ./build.sh
 
       - name: Upload basic tarball with boot and recovery images
@@ -38,10 +42,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      # 安装 Python 2.7（保证脚本可用）
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '2.7'
+      # 安装 Python 2.7（DeadSnakes PPA）
+      - name: Install Python 2.7
+        run: |
+          sudo apt update
+          sudo apt install -y software-properties-common
+          sudo add-apt-repository ppa:deadsnakes/ppa -y
+          sudo apt update
+          sudo apt install -y python2.7
+          sudo ln -sf /usr/bin/python2.7 /usr/bin/python
 
       - name: Make OTA images
         run: |
